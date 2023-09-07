@@ -1,0 +1,22 @@
+#!/bin/bash
+# See skript otsib kasutaja kodukataloogis .log lõpuga faile, kontrollib nende ridade arvu ja väljastab failide nimekirja sorteeritud kahanemisjärjekorras vastavalt ridade arvule.
+# Otsime .log lõpuga faile kasutaja kodukataloogis ja salvestame need muutujasse $files
+files=$(find ~/ -type f -name "*.log" 2>/dev/null)
+# Kui failid on leitud, siis jätkame
+if [ -n "$files" ]; then
+  # Käime failide nimekirja läbi ja arvutame iga faili ridade arvu
+  for file in $files; do
+    lines=$(wc -l < "$file")
+    # Salvestame faili nime ja ridade arvu massiivi $data
+    data+=("$file $lines")
+  done
+  # Sorteerime massiivi $data vastavalt ridade arvule kahanemisjärjekorras
+  sorted_data=($(echo "${data[@]}" | tr " " "\n" | sort -k2 -rn | tr "\n" " "))
+  # Väljastame failide nimekirja sorteeritud kahanemisjärjekorras vastavalt ridade arvule
+  echo "Failide nimekiri sorteeritud kahanemisjärjekorras vastavalt ridade arvule:"
+  for (( i=0; i<${#sorted_data[@]}; i+=2 )); do
+    echo "${sorted_data[i]} - ${sorted_data[i+1]} rida"
+  done
+else
+  echo "Failid ei leitud."
+fi
