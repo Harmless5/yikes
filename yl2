@@ -1,0 +1,14 @@
+#!/bin/bash
+# See skript otsib kasutajale kättesaadavad .log lõpuga failid var kataloogis, kontrollib mitu rida on igas leitud failis ning väljastab failide nimekiri sorteeritud kahanemisjärjekorras vastavalt ridade arvule.
+# Otsime .log lõpuga faile var kataloogis ja salvestame need muutujasse "files"
+files=$(find /var -type f -name "*.log" -user $USER 2>/dev/null)
+# Kontrollime iga faili ridade arvu ja salvestame need koos failinimega massiivi "lines"
+declare -A lines
+for file in $files; do
+    lines[$file]=$(wc -l < $file)
+done
+# Sorteerime failid ridade arvu järgi kahanemisjärjekorras ja väljastame nimekirja
+echo "Failide nimekiri sorteeritud kahanemisjärjekorras vastavalt ridade arvule:"
+for file in "${!lines[@]}" | sort -rn -k2; do
+    echo "$file - ${lines[$file]} rida"
+done

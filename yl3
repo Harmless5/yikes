@@ -1,0 +1,12 @@
+#!/bin/bash
+# Skript, mis väljastab mitu päeva antud hetkel masin on tööl
+# Saame masina nime
+machine_name=$(hostname)
+# Saame serveri tööaja
+uptime_info=$(uptime)
+uptime_days=$(echo $uptime_info | awk '{print $3}')
+uptime_hours=$(echo $uptime_info | awk '{print $5}')
+uptime_minutes=$(echo $uptime_info | awk '{print $6}')
+# Väljastame tulemuse
+echo "Masin $machine_name on töötanud $uptime_days päeva, $uptime_hours tundi ja $uptime_minutes minutit."
+read -p "Press enter to continue"
