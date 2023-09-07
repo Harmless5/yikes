@@ -1,0 +1,8 @@
+#!/bin/bash
+# This script creates variables for the year, president, and sentence, and then concatenates them to form a complete sentence.
+aasta=2021
+president="Alar Karis"
+lause=". aastal valiti Eesti presidendiks "
+taislause=$aasta$lause$president
+
+echo $taislause
