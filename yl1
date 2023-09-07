@@ -1,4 +1,0 @@
-#!/bin/bash
-#Skript, mis väljastab kasutajale kuupäeva ja ajaga seotud info
-echo "Täna on $(date +%A), $(date +%d). $(date +%B) $(date +%Y) ja kell on $(date +%H:%M:%S)"
-echo `cal`
