@@ -8,25 +8,16 @@ $valik = Read-Host "Vali number"
 if ($valik -eq 1) {
     Write-Host "Valisid 1"
     $kasutaja = Read-Host "Sisesta nimi"
-    # Eemalda täpitähed
-    $kasutaja = $kasutaja.Replace("ä", "a")
-    $kasutaja = $kasutaja.Replace("ö", "o")
-    $kasutaja = $kasutaja.Replace("ü", "u")
-    $kasutaja = $kasutaja.Replace("õ", "o")
     $kasutaja = $kasutaja.Split(" ")
     $eesnimi = $kasutaja[0]
     $perenimi = $kasutaja[1]
     $lowerkasutaja = $eesnimi.ToLower() + "." + $perenimi.ToLower()
+    Write-Host $lowerkasutaja
     Remove-LocalUser -Name $lowerkasutaja
     Write-Host "Kasutaja $lowerkasutaja kustutatud!"
 } else {
     Write-Host "Valisid 2"
     $kasutaja = Read-Host "Sisesta kasutaja nimi"
-    # Eemalada täpitähed
-    $kasutaja = $kasutaja.Replace("ä", "a")
-    $kasutaja = $kasutaja.Replace("ö", "o")
-    $kasutaja = $kasutaja.Replace("ü", "u")
-    $kasutaja = $kasutaja.Replace("õ", "o")
     $lowerkasutaja = $kasutaja.ToLower()
     Remove-LocalUser -Name $lowerkasutaja
     Write-Host "Kasutaja $lowerkasutaja kustutatud!"
