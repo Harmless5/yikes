@@ -5,7 +5,6 @@
 
 Write-Host "1 - Kustuta kasutades nime: (John Doe)"
 Write-Host "2 - Kustuta kasutades kasutajanime: (john.doe)"
-Write-Host "3 - Naita kasutajaid"
 $valik = Read-Host "Vali number"
 
 if ($valik -eq 1) {
@@ -15,13 +14,11 @@ if ($valik -eq 1) {
     $perenimi = $kasutaja[1]
     $lowerkasutaja = $eesnimi.ToLower() + "." + $perenimi.ToLower()
     Write-Host $lowerkasutaja
-    Remove-ADUser -Name $lowerkasutaja
+    Remove-ADUser -Identity $lowerkasutaja
     Write-Host "Kasutaja $lowerkasutaja kustutatud!"
 } elseif ($valik -eq 2) {
     $kasutaja = Read-Host "Sisesta kasutaja nimi"
     $lowerkasutaja = $kasutaja.ToLower()
-    Remove-ADUser -Name $lowerkasutaja
+    Remove-ADUser -Identity $lowerkasutaja
     Write-Host "Kasutaja $lowerkasutaja kustutatud!"
-} elseif ($valik -eq 3) {
-    Get-ADUser
 }
