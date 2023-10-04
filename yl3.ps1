@@ -1,24 +1,23 @@
-# Skript, mis kasutajaloomine AD-s kontrollides kas kasutaja juba on olemas
+# Skript, mis võtab nimekirjast olemas olevad nimed ja teeb need AD kasutajaks, kontrollides kas kasutaja juba on olemas
 
 # Nimekiri inimestest
 $inimesed = @(Kristjan Kirsipuu, Kalle Kukk, Malle Mänd, Kätlin Kask)
 
-# Loo nime põhjal Windowsi kasutaja
-$konto = $inimesed[0].ToLower() + "." + $inimesed[1].ToLower()
-
-# Kontrolli kas kasutaja on juba olemas
-if (Get-ADUser -Filter {SamAccountName -eq $konto}) {
-    Write-Host "Kasutaja $konto on juba olemas!"
-    Write-Host $Error[0].Exception.Message
-    exit
-} else {
-    # Loome kasutaja parooliga "Parool1!"
-    New-ADUser -Name $konto -AccountPassword (ConvertTo-SecureString -AsPlainText "Parool1!" -Force)
-    if ($?) {
-        Write-Host "Kasutaja $konto loodud!"
+# Loome AD kasutaja
+foreach ($inimene in $inimesed) {
+    $eesnimi = $inimene.Split(" ")[0]
+    $perenimi = $inimene.Split(" ")[1]
+    $kasutaja = $eesnimi.ToLower() + "." + $perenimi.ToLower()
+    if (Get-ADUser -Filter {SamAccountName -eq $kasutaja}) {
+        Write-Host "Kasutaja $kasutaja on juba olemas!"
     } else {
-        Write-Host "Kasutaja $konto loomine eba6nnestus!"
-        Write-Host $Error[0].Exception.Message
-        exit
+        New-ADUser -Name $inimene -GivenName "AD" -Surname "$eesnimi $perenimi" -SamAccountName $inimene -UserPrincipalName "$inimene@sv-kool.local" -AccountPassword (ConvertTo-SecureString -AsPlainText "Parool1!" -Force) -Enabled $true
+        if ($?) {
+            Write-Host "Kasutaja $kasutaja loodud!"
+        } else {
+            Write-Host "Kasutaja $kasutaja loomine eba6nnestus!"
+            Write-Host $Error[0].Exception.Message
+            exit
+        }
     }
 }
