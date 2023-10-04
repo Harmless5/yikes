@@ -19,10 +19,10 @@ foreach ($inimene in $inimesed) {
     if (Get-ADUser -Filter {SamAccountName -eq $kasutaja}) {
         Write-Host "Kasutaja $kasutaja on juba olemas!" -ForegroundColor red
     } else {
-        $parool = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 8 | % {[char]$_})
+        $parool = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 15 | % {[char]$_})
         $hash = ConvertTo-SecureString -String $parool -AsPlainText -Force
         New-ADUser -Name $kasutaja -GivenName $eesnimi -Surname $perenimi -SamAccountName $kasutaja -UserPrincipalName "$kasutaja@sv-kool.local" -AccountPassword $hash -Enabled $true
-        $kasutaja = Get-ADUser -Identity $kasutajanimi
+        Get-ADUser -Identity $kasutaja
         $kasutaja | Select-Object Name, Password | Export-Csv -Path "kasutajanimi.csv" -NoTypeInformation
         if ($?) {
             Write-Host "Kasutaja $kasutaja ($inimene) loodud!"
