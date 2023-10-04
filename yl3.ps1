@@ -1,11 +1,10 @@
 # Skript, mis kasutajaloomine AD-s kontrollides kas kasutaja juba on olemas
 
-# Küsi kasutajalt ees- ja perenimi
-$eesnimi = Read-Host "Sisesta oma eesnimi: "
-$perenimi = Read-Host "Sisesta oma perenimi: "
+# Nimekiri inimestest
+$inimesed = @(Kristjan Kirsipuu, Kalle Kukk, Malle Mänd, Kätlin Kask)
 
 # Loo nime põhjal Windowsi kasutaja
-$konto = $eesnimi.ToLower() + "." + $perenimi.ToLower()
+$konto = $inimesed[0].ToLower() + "." + $inimesed[1].ToLower()
 
 # Kontrolli kas kasutaja on juba olemas
 if (Get-ADUser -Filter {SamAccountName -eq $konto}) {
@@ -14,7 +13,7 @@ if (Get-ADUser -Filter {SamAccountName -eq $konto}) {
     exit
 } else {
     # Loome kasutaja parooliga "Parool1!"
-    New-ADUser -Name $konto -SamAccountName $konto -AccountPassword (ConvertTo-SecureString -AsPlainText "Parool1!" -Force) -Enabled $true -ChangePasswordAtLogon $true
+    New-ADUser -Name $konto -AccountPassword (ConvertTo-SecureString -AsPlainText "Parool1!" -Force)
     if ($?) {
         Write-Host "Kasutaja $konto loodud!"
     } else {
