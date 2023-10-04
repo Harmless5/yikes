@@ -9,13 +9,13 @@ foreach ($inimene in $inimesed) {
     $perenimi = $inimene.Split(" ")[1]
     $kasutaja = $eesnimi.ToLower() + "." + $perenimi.ToLower()
     if (Get-ADUser -Filter {SamAccountName -eq $kasutaja}) {
-        Write-Host "Kasutaja $kasutaja on juba olemas!"
+        Write-Host "Kasutaja $kasutaja on juba olemas!" -ForegroundColor red
     } else {
         New-ADUser -Name $kasutaja -GivenName $eesnimi -Surname $perenimi -SamAccountName $kasutaja -UserPrincipalName "$kasutaja@sv-kool.local" -AccountPassword (ConvertTo-SecureString -AsPlainText "Parool1!" -Force) -Enabled $true
         if ($?) {
-            Write-Host "Kasutaja $kasutaja loodud!"
+            Write-Host "Kasutaja $kasutaja ($inimene) loodud!"
         } else {
-            Write-Host "Kasutaja $kasutaja loomine eba6nnestus!"
+            Write-Host "Kasutaja $kasutaja loomine eba6nnestus!" -ForegroundColor red
             Write-Host $Error[0].Exception.Message
             exit
         }
