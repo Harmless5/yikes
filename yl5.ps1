@@ -23,7 +23,8 @@ foreach ($inimene in $inimesed) {
         $hash = ConvertTo-SecureString -String $parool -AsPlainText -Force
         New-ADUser -Name $kasutaja -GivenName $eesnimi -Surname $perenimi -SamAccountName $kasutaja -UserPrincipalName "$kasutaja@sv-kool.local" -AccountPassword $hash -Enabled $true
         Get-ADUser -Identity $kasutaja
-        $kasutaja | Select-Object Name, Password | Export-Csv -Path "kasutajanimi.csv" -NoTypeInformation
+        # Ekspordime kasutajanime ja parooli faili
+        $kasutaja | Export-Csv -Path "kasutaja.csv" -NoTypeInformation
         if ($?) {
             Write-Host "Kasutaja $kasutaja ($inimene) loodud!"
         } else {
