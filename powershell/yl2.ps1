@@ -1,12 +1,9 @@
 # Skript, mis kustutab Windowsi kasutaja nimega "eesnimi.perenimi"
 # Küsi kasutaja nime
 
-
-
-
 Write-Host "1 - Kustuta kasutades nime: (John Doe)"
 Write-Host "2 - Kustuta kasutades kasutajanime: (john.doe)"
-Write-Host "3 - Näita kasutajaid"
+Write-Host "3 - Naita kasutajaid"
 $valik = Read-Host "Vali number"
 
 if ($valik -eq 1) {
