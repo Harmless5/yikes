@@ -1,7 +1,7 @@
 # Skript, mis võtab nimekirjast olemas olevad nimed ja teeb need AD kasutajaks, kontrollides kas kasutaja juba on olemas
 
 # Nimekiri inimestest
-$inimesed = @(Kristjan Kirsipuu, Kalle Kukk, Malle Mänd, Kätlin Kask)
+$inimesed = @("Kristjan Kirsipuu","Kalle Kukk","Malle Mänd","Kätlin Kask")
 
 # Loome AD kasutaja
 foreach ($inimene in $inimesed) {
