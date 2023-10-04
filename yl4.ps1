@@ -15,10 +15,10 @@ if ($valik -eq 1) {
     $lowerkasutaja = $eesnimi.ToLower() + "." + $perenimi.ToLower()
     Write-Host $lowerkasutaja
     Remove-ADUser -Identity $lowerkasutaja
-    Write-Host "Kasutaja $lowerkasutaja kustutatud!"
+    Write-Host "Kasutaja $lowerkasutaja on kustutatud!"
 } elseif ($valik -eq 2) {
     $kasutaja = Read-Host "Sisesta kasutaja nimi"
     $lowerkasutaja = $kasutaja.ToLower()
     Remove-ADUser -Identity $lowerkasutaja
-    Write-Host "Kasutaja $lowerkasutaja kustutatud!"
+    Write-Host "Kasutaja $lowerkasutaja on kustutatud!"
 }
