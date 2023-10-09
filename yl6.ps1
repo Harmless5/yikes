@@ -5,14 +5,14 @@ Get-ADUser -Filter * | ForEach-Object {
     # Kontrollime, kas kasutajal on kodukataloog
     if($_.HomeDirectory) {
         # Teeme varunduse faili nime kujul kasutajanimi-kuupäev.zip
-        $backupFileName = $_.SamAccountName + "-" + (Get-Date).ToString("dd.MM.yyyy") + ".zip"
+        $varundusFail = $_.SamAccountName + "-" + (Get-Date).ToString("dd.MM.yyyy") + ".zip"
         # Teeme varunduse faili täisnime kujul C:\Backup\kasutajanimi\kasutajanimi-kuupäev.zip
-        $backupPath = "C:\Backup\" + $_.SamAccountName + "\" + $backupFileName
+        $varandusPath = "C:\Backup\" + $_.SamAccountName + "\" + $varundusFail
         # Teeme kasutaja kodukataloogi varunduse kausta, kui seda veel ei ole
         if(!(Test-Path "C:\Backup\" + $_.SamAccountName)) {
             New-Item -ItemType Directory -Path "C:\Backup\" + $_.SamAccountName
         }
         # Teeme varunduse
-        Compress-Archive -Path $_.HomeDirectory -DestinationPath $backupPath
+        Compress-Archive -Path $_.HomeDirectory -DestinationPath $varandusPath
     }
 }
